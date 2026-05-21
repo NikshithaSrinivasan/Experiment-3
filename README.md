@@ -1,90 +1,199 @@
-# Experiment-3
-# Histogram-of-an-images
+# Histogram Equalization Using OpenCV (Grayscale & Color Images)
+
+---
+
 ## Aim
-To obtain a histogram for finding the frequency of pixels in an Image with pixel values ranging from 0 to 255. Also write the code using OpenCV to perform histogram equalization.
 
-## Software Required:
-Anaconda - Python 3.7
+To write a Python program using OpenCV to perform histogram equalization on both grayscale and color images to enhance image contrast and brightness.
 
-## Algorithm:
-### Step1:
-Read the gray and color image using imread()
+The program performs the following operations:
 
-### Step2:
-Print the image using imshow().
+- Read and display a grayscale image  
+- Plot histogram of the grayscale image  
+- Apply histogram equalization on grayscale image  
+- Read and display a color image  
+- Plot histogram of B, G, R channels  
+- Convert image to HSV color space  
+- Apply histogram equalization on the Value (V) channel  
+- Convert the enhanced image back to BGR format  
+- Display original and enhanced images with histograms  
 
+---
 
+## Software Used
 
-### Step3:
-Use calcHist() function to mark the image in graph frequency for gray and color image.
+- Anaconda – Python 3.7  
+- Jupyter Notebook / VS Code  
+- OpenCV (`cv2`)  
+- NumPy  
+- Matplotlib  
 
-### step4:
-Use calcHist() function to mark the image in graph frequency for gray and color image.
+---
 
-### Step5:
-The Histogram of gray scale image and color image is shown.
+## Algorithm
 
+### Step 1:
+Import the required libraries: OpenCV, NumPy, and Matplotlib.
 
-## Program:
-# Developed By: Nikshitha S
-# Register Number: 212224040220
+### Step 2:
+Read the image `parrot.jpg` in grayscale format.
 
+### Step 3:
+Display the grayscale image and plot its histogram.
+
+### Step 4:
+Apply histogram equalization using `cv2.equalizeHist()` to enhance contrast.
+
+### Step 5:
+Display original grayscale image, its histogram, enhanced image, and its histogram using a 2 × 2 grid.
+
+### Step 6:
+Read the same image in color format.
+
+### Step 7:
+Split the image into B, G, R channels and plot their histograms.
+
+### Step 8:
+Convert the image from BGR to HSV color space.
+
+### Step 9:
+Apply histogram equalization on the V (Value) channel.
+
+### Step 10:
+Merge the channels and convert the image back to BGR format.
+
+### Step 11:
+Display original color image, histogram, enhanced image, and enhanced histogram using a 2 × 2 grid.
+
+---
+
+## Program
+
+### Developed By:
+**Name:**   NIKSHITHA S
+
+**Register No:** 212224040220
+  ### Ex. No. 02
+
+#### 1. import libraries.
 ```python
-
 import cv2
-import numpy as np
 import matplotlib.pyplot as plt
 
-image = cv2.imread('iron.jpg')
-
-gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-
-hist_original = cv2.calcHist([gray_image], [0], None, [256], [0, 256])
-
-equalized_image = cv2.equalizeHist(gray_image)
-
-hist_equalized = cv2.calcHist([equalized_image], [0], None, [256], [0, 256])
-
-plt.figure(figsize=(10, 7))
-
-plt.subplot(2, 2, 1)
-plt.imshow(gray_image, cmap='gray')
-plt.title('Original Grayscale Image')
-plt.axis('off')
-
-plt.subplot(2, 2, 2)
-plt.imshow(equalized_image, cmap='gray')
-plt.title('Equalized Image')
-plt.axis('off')
-
-plt.subplot(2, 2, 3)
-plt.plot(hist_original, color='black')
-plt.title('Original Histogram')
-plt.xlim([0, 256])
-
-
-
-plt.subplot(2, 2, 4)
-plt.plot(hist_equalized, color='black')
-plt.title('Equalized Histogram')
-plt.xlim([0, 256])
-
-plt.tight_layout()
-plt.show()
-
-
-
+```
+#### 2. Read grayscale image.
+```python
+Gray_image = cv2.imread("WhatsApp Image 2026-05-12 at 14.16.29.jpeg", 0)
 
 ```
-## Output:
+#### 3. Display Gray Scale Image.
+```python
+plt.figure(figsize=(6,6))
+plt.imshow(Gray_image, cmap='gray')
+plt.title("Gray Scale Image")
+plt.axis("off")
+plt.show()
+
+```
+#### 4. Read color image.
+```python
+Color_image = cv2.imread("WhatsApp Image 2026-05-12 at 14.32.43.jpeg")
+
+```
+#### 5.Convert BGR to RGB.
+```python
+Color_rgb = cv2.cvtColor(Color_image, cv2.COLOR_BGR2RGB)
+
+```
+#### 6.Display Color Image.
+```python
+plt.figure(figsize=(6,6))
+plt.imshow(Color_rgb)
+plt.title("Color Image")
+plt.axis("off")
+plt.show()
+
+```
+#### 7.Histogram of Gray Scale Image.
+```python
+hist_gray = cv2.calcHist([Gray_image], [0], None, [256], [0,256])
+
+plt.figure(figsize=(8,5))
+plt.title("Histogram of Gray Scale Image")
+plt.xlabel("Pixel Intensity")
+plt.ylabel("Pixel Count")
+plt.plot(hist_gray, color='black')
+plt.xlim([0,256])
+plt.show()
+
+```
+#### 8.Histogram of Blue Channel.
+```python
+hist_blue = cv2.calcHist([Color_image], [0], None, [256], [0,256])
+
+plt.figure(figsize=(8,5))
+plt.title("Histogram of Blue Channel")
+plt.xlabel("Pixel Intensity")
+plt.ylabel("Pixel Count")
+plt.plot(hist_blue, color='blue')
+plt.xlim([0,256])
+plt.show()
+
+```
+#### 9.Histogram Equalization.
+```python
+equalized_image = cv2.equalizeHist(Gray_image)
+plt.figure(figsize=(6,6))
+plt.imshow(equalized_image, cmap='gray')
+plt.title("Equalized Image")
+plt.axis('off')
+plt.show()
+```
+#### 10.Histogram of Equalized Image
+```python
+hist_equalized = cv2.calcHist([equalized], [0], None, [256], [0,256])
+
+plt.figure(figsize=(8,5))
+plt.title("Histogram of Equalized Image")
+plt.xlabel("Pixel Intensity")
+plt.ylabel("Pixel Count")
+plt.plot(hist_equalized, color='green')
+plt.xlim([0,256])
+plt.show()
+```
 
 
-<img width="685" height="482" alt="image" src="https://github.com/user-attachments/assets/fd40285b-527e-4a67-9e66-ad4b32d4d1e5" />
+##  Output
+
+### Grayscale Histogram Equalization
+
+- Original grayscale image is displayed
+<img width="192" height="350" alt="image" src="https://github.com/user-attachments/assets/4a0058a1-1adb-48f6-9b05-352e935c0843" />
 
 
+- Histogram of original grayscale image is plotted
+<img width="493" height="326" alt="image" src="https://github.com/user-attachments/assets/d776b5e6-eace-4e4b-9bcc-4abd75c7d39b" />
+
+### Color Image Histogram Equalization
+
+- Original color image is displayed
+<img width="200" height="349" alt="image" src="https://github.com/user-attachments/assets/7660a300-25a1-4206-bb95-2f764734d92d" />
 
 
+- Histogram of B, G, R channels is plotted
+<img width="496" height="328" alt="image" src="https://github.com/user-attachments/assets/179aa9e7-68f1-42f5-a2aa-958b9c8f5ccf" />
+
+  
+
+### Equalization Image 
+
+- Display Equalized Image
+<img width="194" height="349" alt="image" src="https://github.com/user-attachments/assets/f21a2f98-fa85-4479-b474-85819045fa00" />
+
+- Histogram of Equalized Image
+<img width="494" height="329" alt="image" src="https://github.com/user-attachments/assets/b93e90a4-8aba-4605-9f87-2f714f7fbf33" />
 
 
-## Result: 
-Thus the histogram for finding the frequency of pixels in an image with pixel values ranging from 0 to 255 is obtained. Also,histogram equalization is done for the gray scale image using OpenCV.
+## Result
+
+Thus, histogram equalization is successfully performed on both grayscale and color images using OpenCV. The contrast and brightness of the images are significantly improved, enhancing visual quality and feature visibility.
